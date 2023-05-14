@@ -1,0 +1,13 @@
+.mobile-cart{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-cart{
+        display: flex;
+    }
+
+    .item-count{
+        bottom: 12px !important;
+    }
+}
