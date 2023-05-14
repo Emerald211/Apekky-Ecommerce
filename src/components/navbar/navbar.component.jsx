@@ -11,10 +11,13 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectDropDown } from "../../store/cart/cart.selector";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const currentuser = useSelector(selectCurrentUser);
 
   const dropdown = useSelector(selectDropDown)
+
+  const navigate = useNavigate() 
 
   const [showNav, setShowNav] = useState(false);
 
@@ -85,6 +88,7 @@ const Navbar = () => {
             <li>
               <a
                 href="#"
+                onClick={() => navigate("/shop")}
                 className="block py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700  md:dark:hover:bg-transparent"
               >
                 Shop

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button.component";
 import Carousel from "../../components/carousel/carousel.component";
 import CustomBanner from "../../components/custom-banner/custom-banner.componet";
@@ -5,6 +6,8 @@ import Footer from "../../components/footer/footer.component";
 import PopularCategories from "../../components/popular-categories/popular-categories";
 
 const Home = () => {
+
+  const navigate = useNavigate()
   return (
     <div>
       <Carousel />
@@ -25,7 +28,7 @@ const Home = () => {
             the highest quality.
           </p>
 
-          <Button type="button" buttonType="inverted">
+          <Button onClick={() => navigate("/shop")} type="button" buttonType="inverted">
             SHOP NOW
           </Button>
         </div>

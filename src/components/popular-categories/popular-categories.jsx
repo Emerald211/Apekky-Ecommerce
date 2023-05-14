@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../button/button.component";
 
 const PopularCategories = () => {
+
+  const navigate = useNavigate()
   return (
     <div>
       <div className=" mt-12 mb-12 relative">
@@ -17,7 +20,7 @@ const PopularCategories = () => {
             <div className=" text-sm md:text-base text-center bg-gray-400 rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
               <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
 
-              <Button buttonType="inverted" type="button">
+              <Button onClick={() => navigate("/shop") } buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
             </div>
@@ -27,7 +30,7 @@ const PopularCategories = () => {
             <div className=" bg-gray-400 text-sm md:text-base text-center rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
               <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
 
-              <Button buttonType="inverted" type="button">
+              <Button onClick={() => navigate("/shop")} buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
 
@@ -38,7 +41,7 @@ const PopularCategories = () => {
             <div className=" text-sm md:text-base text-center bg-gray-400 rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
               <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
 
-              <Button buttonType="inverted" type="button">
+              <Button onClick={() => navigate("/shop")} buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
 
@@ -49,7 +52,7 @@ const PopularCategories = () => {
             <div className=" text-sm md:text-base text-center bg-gray-400 rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
               <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
 
-              <Button buttonType="inverted" type="button">
+              <Button  onClick={() => navigate("/shop")} buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
 

@@ -7,9 +7,12 @@ import {
 } from "../../utils/firebase/firebase.component";
 
 import GoogleButton from "react-google-button";
+import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 const MobileNav = ({ set }) => {
   const currentuser = useSelector(selectCurrentUser);
+
+  const navigate = useNavigate()
 
   const googleSignInHandler = async () => {
     await SignInWithGooglePopup();
@@ -30,8 +33,8 @@ const MobileNav = ({ set }) => {
         id="myLinks"
         className=" flex flex-col gap-8 text-2xl font-bold justify-center"
       >
-        <a href="#news">Home</a>
-        <a href="#contact">Shop</a>
+        <a onClick={() => navigate("/")} href="#news">Home</a>
+        <a onClick={() => navigate("/shop")} href="#contact">Shop</a>
 
         {currentuser ? (
           <div className=" flex flex-col gap-7">
