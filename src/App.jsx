@@ -16,17 +16,6 @@ import Checkout from "./pages/checkout/checkout.comppnent";
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    const unsubscribe = customOnAUthStateChange((user) => {
-      console.log(user);
-
-      createUserDocumentFromAuth(user, { uid: user.uid });
-
-      dispatch(setCurrentUSer(user));
-    });
-
-    return unsubscribe;
-  }, []);
 
   useEffect(() => {
     const getRes = async () => {
@@ -39,6 +28,31 @@ function App() {
 
     return getRes;
   }, []);
+  
+  useEffect(() => {
+    const unsubscribe = customOnAUthStateChange((user) => {
+      console.log(user);
+
+      createUserDocumentFromAuth(user, { uid: user.uid });
+
+      dispatch(setCurrentUSer(user));
+
+      // const getRes = async () => {
+      //   const data = await customGetCategoryAndDocumentFromCollection();
+  
+      //   // console.log(data);
+  
+      //   dispatch(setCategories(data));
+      // };
+
+      // return getRes;
+
+    });
+
+    return unsubscribe;
+  }, []);
+
+
   return (
     <>
       <Routes>
