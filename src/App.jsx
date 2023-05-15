@@ -5,30 +5,18 @@ import Home from "./pages/home/home.component";
 import { useEffect } from "react";
 import {
   createUserDocumentFromAuth,
-  customGetCategoryAndDocumentFromCollection,
   customOnAUthStateChange,
 } from "./utils/firebase/firebase.component";
 import { useDispatch } from "react-redux";
 import { setCurrentUSer } from "./store/user/user.action";
 import Shop from "./pages/shop/shop.component";
-import { setCategories } from "./store/categories/category.action";
 import Checkout from "./pages/checkout/checkout.comppnent";
 
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getRes = async () => {
-      const data = await customGetCategoryAndDocumentFromCollection();
 
-      // console.log(data);
 
-      dispatch(setCategories(data));
-    };
-
-    return getRes;
-  }, []);
-  
   useEffect(() => {
     const unsubscribe = customOnAUthStateChange((user) => {
       console.log(user);
@@ -36,16 +24,6 @@ function App() {
       createUserDocumentFromAuth(user, { uid: user.uid });
 
       dispatch(setCurrentUSer(user));
-
-      // const getRes = async () => {
-      //   const data = await customGetCategoryAndDocumentFromCollection();
-  
-      //   // console.log(data);
-  
-      //   dispatch(setCategories(data));
-      // };
-
-      // return getRes;
 
     });
 
