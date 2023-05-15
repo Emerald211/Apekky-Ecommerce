@@ -3,13 +3,14 @@ import ShoppingComponent from "../../components/shopping-component/shopping-comp
 import Sections from "../../components/sections/section.component";
 import { customGetCategoryAndDocumentFromCollection } from "../../utils/firebase/firebase.component";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setCategories } from "../../store/categories/category.action";
 import { data } from "autoprefixer";
 
 
 const Shop = () => {
 
+  const [items, setItems] = useState()
   const dispatch = useDispatch()
   useEffect(() => {
     const getRes = async () => {
@@ -18,10 +19,14 @@ const Shop = () => {
       // console.log(data);
 
       dispatch(setCategories(data));
+
+      setItems(data)
     };
 
     return getRes;
-  }, [data]);
+  }, []);
+
+  useEffect(() => {}, [items])
   return (
     <Routes>
       <Route index element={<ShoppingComponent />} ></Route>
