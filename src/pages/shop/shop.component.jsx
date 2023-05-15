@@ -5,7 +5,6 @@ import { customGetCategoryAndDocumentFromCollection } from "../../utils/firebase
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setCategories } from "../../store/categories/category.action";
-import { data } from "autoprefixer";
 
 
 const Shop = () => {
@@ -26,7 +25,8 @@ const Shop = () => {
     return getRes;
   }, []);
 
-  useEffect(() => {}, [items])
+  useEffect(() => { }, [items])
+  
   return (
     <Routes>
       <Route index element={<ShoppingComponent />} ></Route>
