@@ -9,7 +9,7 @@ const Home = () => {
 
   const navigate = useNavigate()
   return (
-    <div>
+    <div className=" font-serrat">
       <Carousel />
       <PopularCategories />
 

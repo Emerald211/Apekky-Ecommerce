@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav
       style={{ color: "#FF01FD" }}
-      className="bg-white border-gray-200 dark:bg-white shadow-lg"
+      className="bg-white border-gray-200 dark:bg-white shadow-lg font-serrat"
     >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="https://flowbite.com/" className="flex items-center">

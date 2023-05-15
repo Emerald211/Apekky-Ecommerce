@@ -6,7 +6,7 @@ const PopularCategories = () => {
   const navigate = useNavigate()
   return (
     <div>
-      <div className=" mt-12 mb-12 relative">
+      <div className=" mt-12 mb-12 relative font-serrat">
         <div className=" text-center flex flex-col justify-center items-center tracking-wide">
           <h1 className=" tracking-wide">FEATURED COLLECTION</h1>
           <h1 className=" tracking-widest  text-3xl">BEST SELLERS</h1>

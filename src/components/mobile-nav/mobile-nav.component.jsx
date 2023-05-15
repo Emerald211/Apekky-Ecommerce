@@ -24,7 +24,7 @@ const MobileNav = ({ set }) => {
   return (
     <div
       style={{ color: "#EB0EEB" }}
-      className="topnav z-30 absolute mobile-nav left-0 top-0  h-screen w-screen flex flex-col text-center items-center justify-center bg-white"
+      className="topnav z-30 absolute font-serrat mobile-nav left-0 top-0  h-screen w-screen flex flex-col text-center items-center justify-center bg-white"
     >
       <h1 onClick={set} className=" text-lg font-bold absolute top-16 right-16">
         X
