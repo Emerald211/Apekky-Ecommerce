@@ -17,23 +17,23 @@ import { setCategories } from "./store/categories/category.action";
 
 function App() {
 
-  const [items, setItems] = useState()
+  // const [items, setItems] = useState()
   const dispatch = useDispatch()
-  useEffect(() => {
-    const getRes = async () => {
-      const data = await customGetCategoryAndDocumentFromCollection();
+  // useEffect(() => {
+  //   const getRes = async () => {
+  //     const data = await customGetCategoryAndDocumentFromCollection();
 
-      // console.log(data);
+  //     // console.log(data);
 
-      dispatch(setCategories(data));
+  //     dispatch(setCategories(data));
 
-      setItems(data)
-    };
+  //     setItems(data)
+  //   };
 
-    return getRes;
-  }, []);
+  //   return getRes;
+  // }, []);
 
-  useEffect(() => {}, [items])
+  // useEffect(() => {}, [items])
 
 
   useEffect(() => {
@@ -42,19 +42,19 @@ function App() {
 
       createUserDocumentFromAuth(user, { uid: user.uid });
 
-      const getRes = async () => {
-        const data = await customGetCategoryAndDocumentFromCollection();
+      // const getRes = async () => {
+      //   const data = await customGetCategoryAndDocumentFromCollection();
   
-        // console.log(data);
+      //   // console.log(data);
   
-        dispatch(setCategories(data));
+      //   dispatch(setCategories(data));
   
-        setItems(data)
-      };
+      //   setItems(data)
+      // };
   
       dispatch(setCurrentUSer(user));
       
-      return getRes;
+      // return getRes;
     });
 
     return unsubscribe;

@@ -6,23 +6,23 @@ import { customGetCategoryAndDocumentFromCollection } from '../../utils/firebase
 import { setCategories } from '../../store/categories/category.action'
 
 const Navigation = () => {
-  const [items, setItems] = useState()
-  const dispatch = useDispatch()
-  useEffect(() => {
-    const getRes = async () => {
-      const data = await customGetCategoryAndDocumentFromCollection();
+  // const [items, setItems] = useState()
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   const getRes = async () => {
+  //     const data = await customGetCategoryAndDocumentFromCollection();
 
-      // console.log(data);
+  //     // console.log(data);
 
-      dispatch(setCategories(data));
+  //     dispatch(setCategories(data));
 
-      setItems(data)
-    };
+  //     setItems(data)
+  //   };
 
-    return getRes;
-  }, []);
+  //   return getRes;
+  // }, []);
 
-  useEffect(() => { }, [items])
+  // useEffect(() => { }, [items])
   return (
       <div>
       <Navbar />

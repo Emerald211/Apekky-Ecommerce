@@ -22,10 +22,12 @@ const Shop = () => {
       setItems(data)
     };
 
-    return getRes;
+    return () => getRes();
   }, []);
 
-  useEffect(() => { }, [items])
+  // useEffect(() => { }, [items])
+
+  console.log(items);
   
   return (
     <Routes>
