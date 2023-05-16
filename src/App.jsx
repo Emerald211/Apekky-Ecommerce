@@ -42,8 +42,19 @@ function App() {
 
       createUserDocumentFromAuth(user, { uid: user.uid });
 
+      const getRes = async () => {
+        const data = await customGetCategoryAndDocumentFromCollection();
+  
+        // console.log(data);
+  
+        dispatch(setCategories(data));
+  
+        setItems(data)
+      };
+  
       dispatch(setCurrentUSer(user));
-
+      
+      return getRes;
     });
 
     return unsubscribe;
