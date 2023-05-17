@@ -6,36 +6,37 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setCategories } from "../../store/categories/category.action";
 
-
 const Shop = () => {
-
   console.log("page rendered");
 
-  const [items, setItems] = useState()
-  const dispatch = useDispatch()
+  const [items, setItems] = useState([]);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const getRes = async () => {
-      const data = await customGetCategoryAndDocumentFromCollection();
-
-      // console.log(data);
-
-      dispatch(setCategories(data));
-
-      setItems(data)
+    const fetchData = async () => {
+      try {
+        const data = await customGetCategoryAndDocumentFromCollection();
+        dispatch(setCategories(data));
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
-    return () => getRes();
-  }, []);
+    fetchData();
 
-  useEffect(() => { }, [items])
+    return () => {};
+  }, [dispatch]);
 
-  console.log(items);
-  
+  useEffect(() => {
+    return () => {};
+  }, [items]);
+
   return (
     <Routes>
-      <Route index element={<ShoppingComponent />} ></Route>
+      <Route index element={<ShoppingComponent />}></Route>
       <Route path=":section" element={<Sections />}></Route>
-</Routes>
+    </Routes>
   );
 };
 

@@ -7,17 +7,16 @@ import {
   createUserDocumentFromAuth,
   customOnAUthStateChange,
 } from "./utils/firebase/firebase.component";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCurrentUSer } from "./store/user/user.action";
 import Shop from "./pages/shop/shop.component";
 import Checkout from "./pages/checkout/checkout.comppnent";
-import { selectCategories } from "./store/categories/category.selector";
+
 
 
 function App() {
   const dispatch = useDispatch();
 
-  const categories = useSelector(selectCategories)
 
   useEffect(() => {
     const unsubscribe = customOnAUthStateChange((user) => {
@@ -29,7 +28,7 @@ function App() {
     });
 
     return unsubscribe;
-  }, [categories]);
+  }, []);
 
 
 
