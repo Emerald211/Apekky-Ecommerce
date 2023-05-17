@@ -1,33 +1,35 @@
 import { Routes, Route } from "react-router-dom";
 import ShoppingComponent from "../../components/shopping-component/shopping-component";
 import Sections from "../../components/sections/section.component";
-import { customGetCategoryAndDocumentFromCollection } from "../../utils/firebase/firebase.component";
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import { setCategories } from "../../store/categories/category.action";
+// import { customGetCategoryAndDocumentFromCollection } from "../../utils/firebase/firebase.component";
+// import { useDispatch } from "react-redux";
+// import { useEffect, useState } from "react";
+// import { setCategories } from "../../store/categories/category.action";
 
 
 const Shop = () => {
 
-  const [items, setItems] = useState()
-  const dispatch = useDispatch()
-  useEffect(() => {
-    const getRes = async () => {
-      const data = await customGetCategoryAndDocumentFromCollection();
+  console.log("page rendered");
 
-      // console.log(data);
+  // const [items, setItems] = useState()
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   const getRes = async () => {
+  //     const data = await customGetCategoryAndDocumentFromCollection();
 
-      dispatch(setCategories(data));
+  //     // console.log(data);
 
-      setItems(data)
-    };
+  //     dispatch(setCategories(data));
 
-    return () => getRes();
-  }, []);
+  //     setItems(data)
+  //   };
 
-  useEffect(() => { }, [items])
+  //   return () => getRes();
+  // }, []);
 
-  console.log(items);
+  // useEffect(() => { }, [items])
+
+  // console.log(items);
   
   return (
     <Routes>

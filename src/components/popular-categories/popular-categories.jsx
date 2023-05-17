@@ -61,7 +61,7 @@ const PopularCategories = () => {
         </div>
       </div>
 
-      <div className=" mt-20 flex flex-col w-full justify-center items-center">
+      <div className=" mt-20 flex flex-col w-full justify-center items-center mb-7">
         <h1 className=" font-serrat text-3xl ">Best Seller Products</h1>
         <p className=" text-xl mt-3 text-center px-10 lg:px-52 w-full md:w-[70vw] mb-10 ">
           Select from our best-selling product categories. Your beauty is our
