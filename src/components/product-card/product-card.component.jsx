@@ -87,7 +87,7 @@ const ProductCard = ({ products }) => {
               5.0
             </span>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex gap-3 flex-col lg:flex-row lg:justify-between">
             <span className=" text-sm md:text-3xl flex items-center font-serrat font-bold text-gray-900 ">
    <BsCurrencyEuro />{price}
             </span>

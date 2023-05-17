@@ -624,6 +624,13 @@
   "resolved" "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.9.0.tgz"
   "version" "0.9.0"
 
+"@google-pay/button-react@^3.0.9":
+  "integrity" "sha512-c6OntNp4u+4cLVKs9ISBJFhuiDdCR8rPtCZOOErw0tT8hvV5j8NOE+40zs+0TjFiDlqrCvbwu1j7edpRO8WrMg=="
+  "resolved" "https://registry.npmjs.org/@google-pay/button-react/-/button-react-3.0.9.tgz"
+  "version" "3.0.9"
+  dependencies:
+    "@types/googlepay" "^0.7.0"
+
 "@grpc/grpc-js@~1.7.0":
   "integrity" "sha512-H9l79u4kJ2PVSxUNA08HMYAnUBLj9v6KjYQ7SQ71hOZcEXhShE/y5iQCesP8+6/Ik/7i2O0a10bPquIcYfufog=="
   "resolved" "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.7.3.tgz"
@@ -821,6 +828,11 @@
   "resolved" "https://registry.npmjs.org/@splidejs/splide/-/splide-4.1.4.tgz"
   "version" "4.1.4"
 
+"@types/googlepay@^0.7.0":
+  "integrity" "sha512-jC7ViexJeV8LlTKLiUBfNs5GICbm0PYsm5Y30JCEBkreY0bMNA+F4KnTEz+WtqBTRldTAxKBKqRstlOUFpW+dA=="
+  "resolved" "https://registry.npmjs.org/@types/googlepay/-/googlepay-0.7.0.tgz"
+  "version" "0.7.0"
+
 "@types/hoist-non-react-statics@^3.3.1":
   "version" "3.3.1"
   dependencies:
@@ -842,14 +854,14 @@
   "resolved" "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   "version" "15.7.5"
 
-"@types/react-dom@^16.8 || ^17.0 || ^18.0", "@types/react-dom@^18.0.11":
+"@types/react-dom@^16.8 || ^17.0 || ^18.0", "@types/react-dom@^18.0.11", "@types/react-dom@>=16.0.0":
   "integrity" "sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.11.tgz"
   "version" "18.0.11"
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.8 || ^17.0 || ^18.0", "@types/react@^18.0.28":
+"@types/react@*", "@types/react@^16.8 || ^17.0 || ^18.0", "@types/react@^18.0.28", "@types/react@>=16.0.0":
   "integrity" "sha512-ExsidLLSzYj4cvaQjGnQCk4HFfVT9+EZ9XZsQ8Hsrcn8QNgXtpZ3m9vSIC2MWtx7jHictK6wYhQgGh6ic58oOw=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-18.0.38.tgz"
   "version" "18.0.38"

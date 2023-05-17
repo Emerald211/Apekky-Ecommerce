@@ -25,7 +25,7 @@ const Shop = () => {
     return () => getRes();
   }, []);
 
-  // useEffect(() => { }, [items])
+  useEffect(() => { }, [items])
 
   console.log(items);
   

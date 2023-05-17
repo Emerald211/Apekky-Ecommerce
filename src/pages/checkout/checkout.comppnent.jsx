@@ -8,6 +8,7 @@ import "./checkout.styles.scss";
 import { BsCurrencyEuro } from "react-icons/bs";
 // import { useState } from "react";
 import Paypal from "../../components/paypal/paypal.component";
+import GooglePayButton from "@google-pay/button-react";
 
 const Checkout = () => {
   const cartItem = useSelector(selectCartItems);
@@ -49,8 +50,46 @@ const Checkout = () => {
         {cartTotal}
       </span>
 
-      <div className=" mt-24 font-serrat">
-        <h1>Payment Method</h1>
+      <div className=" mt-24 flex justify-center items-center flex-col font-serrat">
+        <h1 className=" mb-4">Payment Method</h1>
+
+        <GooglePayButton
+          environment="TEST"
+          paymentRequest={{
+            apiVersion: 2,
+            apiVersionMinor: 0,
+            allowedPaymentMethods: [
+              {
+                type: "CARD",
+                parameters: {
+                  allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+                  allowedCardNetworks: ["MASTERCARD", "VISA"],
+                },
+                tokenizationSpecification: {
+                  type: "PAYMENT_GATEWAY",
+                  parameters: {
+                    gateway: "example",
+                    gatewayMerchantId: "exampleGatewayMerchantId",
+                  },
+                },
+              },
+            ],
+            merchantInfo: {
+              merchantId: "12345678901234567890",
+              merchantName: "Demo Merchant",
+            },
+            transactionInfo: {
+              totalPriceStatus: "FINAL",
+              totalPriceLabel: "Total",
+              totalPrice: "100.00",
+              currencyCode: "USD",
+              countryCode: "US",
+            },
+          }}
+          onLoadPaymentData={(paymentRequest) => {
+            console.log("load payment data", paymentRequest);
+          }}
+         />
 
         <Paypal />
       </div>

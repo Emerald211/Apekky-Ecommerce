@@ -5,36 +5,15 @@ import Home from "./pages/home/home.component";
 import { useEffect } from "react";
 import {
   createUserDocumentFromAuth,
-  customGetCategoryAndDocumentFromCollection,
   customOnAUthStateChange,
 } from "./utils/firebase/firebase.component";
 import { useDispatch } from "react-redux";
 import { setCurrentUSer } from "./store/user/user.action";
 import Shop from "./pages/shop/shop.component";
 import Checkout from "./pages/checkout/checkout.comppnent";
-import { useState } from "react";
-import { setCategories } from "./store/categories/category.action";
 
 function App() {
-
-  // const [items, setItems] = useState()
-  const dispatch = useDispatch()
-  // useEffect(() => {
-  //   const getRes = async () => {
-  //     const data = await customGetCategoryAndDocumentFromCollection();
-
-  //     // console.log(data);
-
-  //     dispatch(setCategories(data));
-
-  //     setItems(data)
-  //   };
-
-  //   return getRes;
-  // }, []);
-
-  // useEffect(() => {}, [items])
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const unsubscribe = customOnAUthStateChange((user) => {
@@ -42,24 +21,11 @@ function App() {
 
       createUserDocumentFromAuth(user, { uid: user.uid });
 
-      // const getRes = async () => {
-      //   const data = await customGetCategoryAndDocumentFromCollection();
-  
-      //   // console.log(data);
-  
-      //   dispatch(setCategories(data));
-  
-      //   setItems(data)
-      // };
-  
       dispatch(setCurrentUSer(user));
-      
-      // return getRes;
     });
 
     return unsubscribe;
   }, []);
-
 
   return (
     <>
