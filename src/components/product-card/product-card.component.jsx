@@ -1,21 +1,24 @@
-import { BsCurrencyEuro} from 'react-icons/bs'
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCartItems } from '../../store/cart/cart.selector';
-import { addItemToCart } from '../../store/cart/cart.action';
+import { BsCurrencyEuro } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { addItemToCart } from "../../store/cart/cart.action";
+import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 const ProductCard = ({ products }) => {
+  const [itemsAdd, setItemsAdd] = useState(false);
 
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+
   // eslint-disable-next-line react/prop-types
-  const { name, imageUrl, price } = products
+  const { name, imageUrl, price } = products;
 
-  const cartItem = useSelector(selectCartItems)
-  
+  const cartItem = useSelector(selectCartItems);
+
   const addToCartHandler = () => {
-    dispatch(addItemToCart(cartItem, products))
-  }
+    setItemsAdd(true);
+    dispatch(addItemToCart(cartItem, products));
+  };
   return (
     <div>
       <div className="w-full max-w-sm  border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-700">
@@ -29,7 +32,7 @@ const ProductCard = ({ products }) => {
         <div className="px-5 pb-5">
           <a href="#">
             <h5 className=" text-sm md:text-xl font-semibold font-serrat tracking-tight text-gray-900 ">
-         {name}
+              {name}
             </h5>
           </a>
           <div className="flex items-center mt-2.5 mb-5">
@@ -89,15 +92,26 @@ const ProductCard = ({ products }) => {
           </div>
           <div className="flex gap-3 flex-col lg:flex-row lg:justify-between">
             <span className=" text-sm md:text-3xl flex items-center font-serrat font-bold text-gray-900 ">
-   <BsCurrencyEuro />{price}
+              <BsCurrencyEuro />
+              {price}
             </span>
-            <a
-              href="#"
-              className="text-white bg-main hover:bg-black font-serrat focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[10px] lg:text-[5px] md:text-sm px-1 md:px-5 py-2.5 text-center "
-              onClick={addToCartHandler}
-            >
-              Add to cart
-            </a>
+
+            {itemsAdd ? (
+              <a
+                href="#"
+                className="text-white bg-black hover:bg-pink font-serrat focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[10px] lg:text-[5px] md:text-sm px-1 md:px-5 py-2.5 text-center "
+              >
+                Added
+              </a>
+            ) : (
+              <a
+                href="#"
+                className="text-white bg-main hover:bg-black font-serrat focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[10px] lg:text-[5px] md:text-sm px-1 md:px-5 py-2.5 text-center "
+                onClick={addToCartHandler}
+              >
+                Add to cart
+              </a>
+            )}
           </div>
         </div>
       </div>
