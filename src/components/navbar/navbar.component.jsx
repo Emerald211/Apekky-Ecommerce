@@ -38,7 +38,7 @@ const Navbar = () => {
       className="bg-white border-gray-200 dark:bg-white shadow-lg font-serrat"
     >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center">
+        <a onClick={() => navigate("/")} className="flex items-center">
           <img src={logo} className="h-12 mr-3" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-purp">
             Appeky Store
@@ -78,7 +78,7 @@ const Navbar = () => {
           <ul className="font-medium flex items-center flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 dark:border-gray-700">
             <li>
               <a
-                href="#"
+          onClick={() => navigate("/")}
                 className="block py-2 pl-3 pr-4  rounded md:bg-transparent text-lg font-bold"
                 aria-current="page"
               >

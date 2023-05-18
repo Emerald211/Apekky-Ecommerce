@@ -33,8 +33,8 @@ const MobileNav = ({ set }) => {
         id="myLinks"
         className=" flex flex-col gap-8 text-2xl font-bold justify-center"
       >
-        <a onClick={() => navigate("/")} href="#news">Home</a>
-        <a onClick={() => navigate("/shop")} href="#contact">Shop</a>
+        <a onClick={() => navigate("/")}>Home</a>
+        <a onClick={() => navigate("/shop")}>Shop</a>
 
         {currentuser ? (
           <div className=" flex flex-col gap-7">

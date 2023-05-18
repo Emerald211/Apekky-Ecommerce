@@ -20,7 +20,7 @@ const PopularCategories = () => {
             <div className=" text-sm md:text-base text-center bg-gray-400 rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
               <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
 
-              <Button onClick={() => navigate("/shop") } buttonType="inverted" type="button">
+              <Button onClick={() => navigate("/shop/body cream") } buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
             </div>
@@ -28,9 +28,9 @@ const PopularCategories = () => {
 
           <div className=" bg-category1 bg-cover w-[150px] h-[150px] md:w-[300px] md:h-[300px] flex flex-col justify-center items-center text-white ">
             <div className=" bg-gray-400 text-sm md:text-base text-center rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
-              <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
+              <h1 className="z-30 mb-5">Bathing Spa</h1>
 
-              <Button onClick={() => navigate("/shop")} buttonType="inverted" type="button">
+              <Button onClick={() => navigate("/shop/bathing spa")} buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
 
@@ -39,9 +39,9 @@ const PopularCategories = () => {
 
           <div className=" bg-category2 bg-cover w-[150px] h-[150px] md:w-[300px] md:h-[300px] flex flex-col justify-center items-center text-white ">
             <div className=" text-sm md:text-base text-center bg-gray-400 rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
-              <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
+              <h1 className="z-30 mb-5">Body Oil</h1>
 
-              <Button onClick={() => navigate("/shop")} buttonType="inverted" type="button">
+              <Button onClick={() => navigate("/shop/body oil")} buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
 
@@ -50,9 +50,9 @@ const PopularCategories = () => {
 
           <div className=" bg-category3 bg-cover w-[150px] h-[150px] md:w-[300px] md:h-[300px] flex flex-col justify-center items-center text-white ">
             <div className=" text-sm md:text-base text-center bg-gray-400 rounded-md p-4 w-full h-full flex flex-col justify-center items-center bg-clip-padding hover:backdrop-filter hover:backdrop-blur-sm bg-opacity-10 border border-gray-100">
-              <h1 className="z-30 mb-5">Body Cream/Lotion</h1>
+              <h1 className="z-30 mb-5">Body Serums</h1>
 
-              <Button  onClick={() => navigate("/shop")} buttonType="inverted" type="button">
+              <Button  onClick={() => navigate("/shop/serums")} buttonType="inverted" type="button">
                 SHOP NOW
               </Button>
 
@@ -68,7 +68,7 @@ const PopularCategories = () => {
           priority. Your beauty and confidence lies within you
         </p>
 
-        <Button type="button" buttonType="inverted">
+        <Button onClick={() => navigate("/shop")} type="button" buttonType="inverted">
           {" "}
           VIEW ALL PRODUCTS
         </Button>
