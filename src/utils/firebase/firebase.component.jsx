@@ -65,20 +65,64 @@ export const customAddDocumentFromCollection = async (
   await batch.commit();
 };
 
+// export const createUserDocumentFromAuth = async (
+//   userAuth,
+//   additionalInformation = {}
+// ) => {
+//   const userDocRef = doc(db, "users", userAuth.uid);
+
+//   const userSnapshot = await getDoc(userDocRef);
+
+//   // If user doesnt exist
+//   if (!userSnapshot.exists()) {
+//     const { displayName, email } = userAuth;
+//     const createdAt = new Date();
+
+//     try {
+//       await setDoc(userDocRef, {
+//         displayName,
+//         email,
+//         createdAt,
+//         ...additionalInformation,
+//       });
+
+//       console.log("done");
+//     } catch (error) {
+//       console.log("error creating the user", error.message);
+//     }
+//   } else {
+//     const { displayName, email, uid, isAnonymous } = userAuth;
+//     const createdAt = new Date();
+
+//     try {
+//       await setDoc(userDocRef, {
+//         displayName,
+//         email,
+//         createdAt,
+//         uid,
+//         isAnonymous,
+//         ...additionalInformation,
+//       });
+//     } catch (error) {
+//       console.log("error creating the user", error.message);
+//     }
+//   }
+
+//   return userDocRef;
+// };
+
 export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInformation = {}
 ) => {
-  const userDocRef = doc(db, "users", userAuth.uid);
+  try {
+    const userDocRef = doc(db, "users", userAuth.uid);
+    const userSnapshot = await getDoc(userDocRef);
 
-  const userSnapshot = await getDoc(userDocRef);
+    if (!userSnapshot.exists()) {
+      const { displayName, email } = userAuth;
+      const createdAt = new Date();
 
-  // If user doesnt exist
-  if (!userSnapshot.exists()) {
-    const { displayName, email } = userAuth;
-    const createdAt = new Date();
-
-    try {
       await setDoc(userDocRef, {
         displayName,
         email,
@@ -86,15 +130,11 @@ export const createUserDocumentFromAuth = async (
         ...additionalInformation,
       });
 
-      console.log("done");
-    } catch (error) {
-      console.log("error creating the user", error.message);
-    }
-  } else {
-    const { displayName, email, uid, isAnonymous } = userAuth;
-    const createdAt = new Date();
+      console.log("User document created successfully");
+    } else {
+      const { displayName, email, uid, isAnonymous } = userAuth;
+      const createdAt = new Date();
 
-    try {
       await setDoc(userDocRef, {
         displayName,
         email,
@@ -103,12 +143,13 @@ export const createUserDocumentFromAuth = async (
         isAnonymous,
         ...additionalInformation,
       });
-    } catch (error) {
-      console.log("error creating the user", error.message);
     }
-  }
 
-  return userDocRef;
+    return userDocRef;
+  } catch (error) {
+    console.error("Error creating the user", error.message);
+    throw error;
+  }
 };
 
 export const customGetCategoryAndDocumentFromCollection = async () => {

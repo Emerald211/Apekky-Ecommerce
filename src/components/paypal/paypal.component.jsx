@@ -5,20 +5,20 @@ import {
   selectCartTotal,
 } from "../../store/cart/cart.selector";
 import { createUserDocumentFromAuth } from "../../utils/firebase/firebase.component";
-
 import { customOnAUthStateChange } from "../../utils/firebase/firebase.component";
+import emailjs from "emailjs-com";
 
 export default function Paypal() {
+  emailjs.init("mESjxZ_og4PkWRGaA");
+
   const paypal = useRef();
 
   const total = useSelector(selectCartTotal);
   const cartItem = useSelector(selectCartItems);
-  // const user = useSelector(selectCurrentUser)
 
   useEffect(() => {
     window.paypal
       .Buttons({
-        // eslint-disable-next-line no-unused-vars
         createOrder: (data, actions, err) => {
           return actions.order.create({
             intent: "CAPTURE",
@@ -27,7 +27,7 @@ export default function Paypal() {
                 description: "Total Amount",
                 amount: {
                   currency_code: "EUR",
-                  value: total,
+                  value: Math.floor(total),
                 },
               },
             ],
@@ -41,6 +41,7 @@ export default function Paypal() {
             email: order.payer.email_address,
             name: `${order.payer.name.given_name} ${order.payer.name.surname}`,
             items: cartItem,
+            amount: `${total} Euros`,
             status: order.status,
             time: order.create_time,
             payerid: order.payer.payer_id,
@@ -48,32 +49,107 @@ export default function Paypal() {
 
           console.log(completedOrder);
 
-          console.log("bgghghg");
+          const products = completedOrder.items;
 
-          alert("complered")
+          const productDetails = products.map((product) => {
+            return `
+              Product: ${product.name}
+              Image URL: ${product.imageUrl}
+              Price: ${product.price} Euros
+              Quantity: ${product.quantity}
+            `;
+          });
 
-          const addOrders = () => {
-            const unsubscribe = customOnAUthStateChange((user) => {
-              console.log(user);
+          const formattedProductDetails = productDetails.join("\n");
 
-              createUserDocumentFromAuth(user, { orders: completedOrder});
-            });
+          // To buyer
 
-            console.log("jsjdj");
-            alert("hdhdh")
+          const sendPaymentConfirmationEmail = () => {
+            const templateParams = {
+              name: completedOrder.name,
+              order_id: completedOrder.id,
+              amount: completedOrder.amount,
+              paymentMethod: "PAYPAL",
+              items: `${formattedProductDetails}`,
+            };
 
-            return unsubscribe;
-          
+            emailjs
+              .send("service_x1xb88n", "template_vswwvhp", templateParams)
+              .then((response) => {
+                console.log(
+                  "Payment confirmation email sent to the customer:",
+                  response.status,
+                  response.text
+                );
+              })
+              .catch((error) => {
+                console.error(
+                  "Error sending payment confirmation email to the customer:",
+                  error
+                );
+              });
           };
 
-          addOrders();
+          sendPaymentConfirmationEmail();
+
+          // Assuming you have configured EmailJS and initialized it with your User ID
+
+          // Function to send the payment confirmation email to the seller
+
+          const sendPaymentNotificationToSeller = () => {
+            const templateParams = {
+              order_id: completedOrder.id,
+              amount: completedOrder.amount,
+              customerName: completedOrder.name,
+              customerEmail: completedOrder.email,
+              paymentMethod: "PAYPAL",
+              items: `${formattedProductDetails}`,
+            };
+
+            emailjs
+              .send("service_x1xb88n", "template_csfo85y", templateParams)
+              .then((response) => {
+                console.log(
+                  "Payment notification email sent to the seller:",
+                  response.status,
+                  response.text
+                );
+              })
+              .catch((error) => {
+                console.error(
+                  "Error sending payment notification email to the seller:",
+                  error
+                );
+              });
+          };
+
+          // Usage example
+          sendPaymentNotificationToSeller();
+
+          alert("Order completed");
+
+          const unsubscribe = customOnAUthStateChange((user) => {
+            if (user) {
+              console.log("User is authenticated:", user);
+              // Call the createUserDocumentFromAuth function
+              createUserDocumentFromAuth(user, { orders: [completedOrder] })
+                .then(() => console.log("User document created successfully"))
+                .catch((error) =>
+                  console.error("Error creating user document:", error)
+                );
+            } else {
+              console.log("User is not authenticated");
+            }
+          });
+
+          return () => unsubscribe();
         },
         onError: (err) => {
           console.log(err);
         },
       })
       .render(paypal.current);
-  }, []);
+  }, [total, cartItem]);
 
   return (
     <div>
