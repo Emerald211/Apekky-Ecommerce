@@ -4,9 +4,11 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../../store/cart/cart.selector";
-import { createUserDocumentFromAuth } from "../../utils/firebase/firebase.component";
+// import { createUserDocumentFromAuth } from "../../utils/firebase/firebase.component";
 import { customOnAUthStateChange } from "../../utils/firebase/firebase.component";
 import emailjs from "emailjs-com";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../utils/firebase/firebase.component";
 
 export default function Paypal() {
   emailjs.init("mESjxZ_og4PkWRGaA");
@@ -14,6 +16,7 @@ export default function Paypal() {
   const paypal = useRef();
 
   const total = useSelector(selectCartTotal);
+
   const cartItem = useSelector(selectCartItems);
 
   useEffect(() => {
@@ -48,6 +51,7 @@ export default function Paypal() {
           };
 
           console.log(completedOrder);
+          console.log(total);
 
           const products = completedOrder.items;
 
@@ -128,14 +132,31 @@ export default function Paypal() {
 
           alert("Order completed");
 
+
           const unsubscribe = customOnAUthStateChange((user) => {
             if (user) {
               console.log("User is authenticated:", user);
-              // Call the createUserDocumentFromAuth function
-              createUserDocumentFromAuth(user, { orders: [completedOrder] })
-                .then(() => console.log("User document created successfully"))
+
+              // Fetch the existing user document
+              const userDocRef = doc(db, "users", user.uid);
+              getDoc(userDocRef)
+                .then((docSnapshot) => {
+                  if (docSnapshot.exists()) {
+                    const existingOrders = docSnapshot.data().orders || [];
+
+                    // Update the user document by adding the new order to the existing orders array
+                    const updatedOrders = [...existingOrders, completedOrder];
+                    return updateDoc(userDocRef, { orders: updatedOrders });
+                  } else {
+                    // Create a new user document with the order as the first entry in the orders array
+                    return setDoc(userDocRef, { orders: [completedOrder] });
+                  }
+                })
+                .then(() =>
+                  console.log("User document created/updated successfully")
+                )
                 .catch((error) =>
-                  console.error("Error creating user document:", error)
+                  console.error("Error creating/updating user document:", error)
                 );
             } else {
               console.log("User is not authenticated");

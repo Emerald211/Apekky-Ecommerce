@@ -131,18 +131,18 @@ export const createUserDocumentFromAuth = async (
       });
 
       console.log("User document created successfully");
-    } else {
-      const { displayName, email, uid, isAnonymous } = userAuth;
-      const createdAt = new Date();
+      // } else {
+      //   const { displayName, email, uid, isAnonymous } = userAuth;
+      //   const createdAt = new Date();
 
-      await setDoc(userDocRef, {
-        displayName,
-        email,
-        createdAt,
-        uid,
-        isAnonymous,
-        ...additionalInformation,
-      });
+      //   await setDoc(userDocRef, {
+      //     displayName,
+      //     email,
+      //     createdAt,
+      //     uid,
+      //     isAnonymous,
+      //     ...additionalInformation,
+      //   });
     }
 
     return userDocRef;
