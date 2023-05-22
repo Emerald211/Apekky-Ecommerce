@@ -4,6 +4,7 @@ import {
   getAuth,
   signInWithPopup,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
@@ -167,5 +168,26 @@ export const customGetCategoryAndDocumentFromCollection = async () => {
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
-  return await createUserWithEmailAndPassword(auth, email, password);
+  if (!email || !password) return;
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error) {
+    // Handle error here
+    if (error.code === "auth/email-already-in-use") {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        return userCredential.user;
+      } catch (signInError) {
+        console.error("Error signing in with existing email and password:", signInError);
+        return null;
+      }
+    } else {
+      console.error("Error creating user:", error);
+      return null;
+    }
+  }
+
+  // return await createUserWithEmailAndPassword(auth, email, password);
 };

@@ -10,7 +10,9 @@ import emailjs from "emailjs-com";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase/firebase.component";
 
-export default function Paypal() {
+export default function Paypal({ formData }) {
+  
+  const {address, deliveytime} = formData
   emailjs.init("mESjxZ_og4PkWRGaA");
 
   const paypal = useRef();
@@ -108,6 +110,8 @@ export default function Paypal() {
               customerEmail: completedOrder.email,
               paymentMethod: "PAYPAL",
               items: `${formattedProductDetails}`,
+              address: address,
+              deliverytime: deliveytime,
             };
 
             emailjs
