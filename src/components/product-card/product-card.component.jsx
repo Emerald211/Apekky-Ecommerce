@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems } from "../../store/cart/cart.selector";
 import { addItemToCart } from "../../store/cart/cart.action";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const ProductCard = ({ products }) => {
@@ -10,8 +11,10 @@ const ProductCard = ({ products }) => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate()
+
   // eslint-disable-next-line react/prop-types
-  const { name, imageUrl, price } = products;
+  const { name, imageUrl, price, id } = products;
 
   const cartItem = useSelector(selectCartItems);
 
@@ -21,7 +24,7 @@ const ProductCard = ({ products }) => {
   };
   return (
     <div>
-      <div className="w-full max-w-sm  border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-700">
+      <div onClick={() => navigate(`/shop/description/${id}`)} className="w-full max-w-sm  border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-700">
         <a href="#">
           <img
             className="p-8 rounded-t-lg"

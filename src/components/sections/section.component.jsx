@@ -5,6 +5,9 @@ import { selectCategoriesMap } from "../../store/categories/category.selector";
 import ProductCard from "../product-card/product-card.component";
 import "./section.styles.scss";
 const Sections = () => {
+
+  
+
   const { section } = useParams();
 
   const categoriesMap = useSelector(selectCategoriesMap);

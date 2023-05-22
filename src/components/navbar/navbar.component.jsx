@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./navbar.styles.css"
+import {  useState } from "react";
+import "./navbar.styles.css";
 import logo from "../../assets/logo.jpg";
 import MobileNav from "../mobile-nav/mobile-nav.component";
 import CartIcon from "../cart-icon/cart-icon.component";
@@ -7,17 +7,21 @@ import {
   SignInWithGooglePopup,
   customSignOut,
 } from "../../utils/firebase/firebase.component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectDropDown } from "../../store/cart/cart.selector";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
 import { useNavigate } from "react-router-dom";
+import { setCurrentUSer } from "../../store/user/user.action";
 const Navbar = () => {
+
   const currentuser = useSelector(selectCurrentUser);
 
-  const dropdown = useSelector(selectDropDown)
+  const dropdown = useSelector(selectDropDown);
 
-  const navigate = useNavigate() 
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch()
 
   const [showNav, setShowNav] = useState(false);
 
@@ -31,6 +35,8 @@ const Navbar = () => {
 
   const signOutHandler = () => {
     customSignOut();
+    dispatch(setCurrentUSer({}))
+    
   };
   return (
     <nav
@@ -75,10 +81,10 @@ const Navbar = () => {
           </svg>
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul className="font-medium flex items-center flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 dark:border-gray-700">
+          <ul className="font-medium flex items-center cursor-pointer flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 dark:border-gray-700">
             <li>
               <a
-          onClick={() => navigate("/")}
+                onClick={() => navigate("/")}
                 className="block py-2 pl-3 pr-4  rounded md:bg-transparent text-lg font-bold"
                 aria-current="page"
               >
@@ -89,28 +95,24 @@ const Navbar = () => {
               <a
                 href="#"
                 onClick={() => navigate("/shop")}
-                className="block py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700  md:dark:hover:bg-transparent"
+                className="block py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0   md:dark:hover:bg-transparent"
               >
                 Shop
               </a>
             </li>
 
-        
-           
+            <li>
+              <a className="flex items-center py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0 cursor-pointer">
+                Orders <CartIcon />
+              </a>
+            </li>
 
             {currentuser ? (
               <div className=" flex items-center">
                 <li>
-                  <a className="flex items-center py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0  hover:px-4  ">
-                    Orders <CartIcon />
-                  </a>
-                </li>
-
-         
-                <li>
                   <a
                     onClick={signOutHandler}
-                    className="block ml-4 py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0  dark:hover:bg-[#FF01FD] hover:bg-white hover:px-4 hover:text-white "
+                    className="block text-lg font-bold  rounded   md:border-0 md:p-0  cursor-pointer "
                   >
                     Sign Out
                   </a>
@@ -120,7 +122,7 @@ const Navbar = () => {
               <li>
                 <a
                   onClick={googleSignInHandler}
-                  className="block py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0  dark:hover:bg-[#FF01FD] hover:bg-white hover:px-4 hover:text-white "
+                  className="block py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0 "
                 >
                   Sign In
                 </a>

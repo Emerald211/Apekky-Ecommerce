@@ -9,15 +9,19 @@ import { BsCurrencyEuro } from "react-icons/bs";
 // import { useState } from "react";
 import Paypal from "../../components/paypal/paypal.component";
 import GooglePayButton from "@google-pay/button-react";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import SignIn from "../../components/sign-in/sign-in.component";
 
 const Checkout = () => {
   const cartItem = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
+  const currentuser = useSelector(selectCurrentUser)
 
   // const [checkout, setCheckout] = useState(false);
 
   return (
-    <div className=" checkout-container font-serrat">
+    <>
+      { currentuser ?      <div className=" checkout-container font-serrat">
       <div className=" checkout-header">
         <div className=" header-block">
           <span>Product</span>
@@ -93,7 +97,16 @@ const Checkout = () => {
 
         <Paypal />
       </div>
-    </div>
+      </div> :
+        <div>
+         <SignIn />
+        </div>
+    
+    
+    }
+
+    </>
+
   );
 };
 

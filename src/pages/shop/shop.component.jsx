@@ -5,6 +5,7 @@ import { customGetCategoryAndDocumentFromCollection } from "../../utils/firebase
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setCategories } from "../../store/categories/category.action";
+import Description from "../description/description.component";
 
 const Shop = () => {
   console.log("page rendered");
@@ -36,6 +37,7 @@ const Shop = () => {
     <Routes>
       <Route index element={<ShoppingComponent />}></Route>
       <Route path=":section" element={<Sections />}></Route>
+      <Route path="description/:id" element={<Description />}></Route>
     </Routes>
   );
 };

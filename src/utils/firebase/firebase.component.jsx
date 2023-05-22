@@ -3,6 +3,7 @@ import {
   GoogleAuthProvider,
   getAuth,
   signInWithPopup,
+  createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
@@ -161,4 +162,10 @@ export const customGetCategoryAndDocumentFromCollection = async () => {
   // console.log(querySnapShot.docs.map((docSnapshot) => docSnapshot.data()));
 
   return querySnapShot.docs.map((docSnapshot) => docSnapshot.data());
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
 };

@@ -8,6 +8,8 @@ import CategoryPreview from "../category-preview/category-preview.component";
 const ShoppingComponent = () => {
   const categoriesMap = useSelector(selectCategoriesMap);
 
+  console.log(categoriesMap);
+
   return (
     <div>
       <CustomBanner>
