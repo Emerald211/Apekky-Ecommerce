@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 
+
 const selectCartReducer = (state) => state.cart;
 
 export const selectCartItems = createSelector(
@@ -12,9 +13,11 @@ export const selectDropDown = createSelector(
   (cart) => cart.dropdown
 );
 
+export const selectDeliveryFee = createSelector([selectCartReducer], (cart) => cart.deliveryFee)
+
 export const selectCartTotal = createSelector([selectCartReducer], (cart) =>
   cart.cartItem.reduce(
-    (total, eachCartItem) => total + eachCartItem.quantity * eachCartItem.price,
+    (total, eachCartItem) => total + eachCartItem.quantity * eachCartItem.price + cart.deliveryFee,
     0
   )
 );

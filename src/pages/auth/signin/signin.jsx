@@ -1,10 +1,10 @@
 import GoogleButton from "react-google-button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.component";
-import { SignInWithGooglePopup } from "../../utils/firebase/firebase.component";
+import { createAuthUserWithEmailAndPassword } from "../../../utils/firebase/firebase.component";
+import { SignInWithGooglePopup } from "../../../utils/firebase/firebase.component";
 
-const SignIn = () => {
+const SignInPage = () => {
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
@@ -12,7 +12,7 @@ const SignIn = () => {
   const onSubmitAction = async (data) => {
     const { email, password } = data;
     console.log("___FORM_DATA___,", data);
-    navigate("/checkout");
+    navigate("/shop");
 
     await createAuthUserWithEmailAndPassword(email, password);
     };
@@ -141,4 +141,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInPage;

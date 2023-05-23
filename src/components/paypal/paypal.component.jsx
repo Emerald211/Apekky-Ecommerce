@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import {
   selectCartItems,
   selectCartTotal,
+  selectDeliveryFee,
 } from "../../store/cart/cart.selector";
 // import { createUserDocumentFromAuth } from "../../utils/firebase/firebase.component";
 import { customOnAUthStateChange } from "../../utils/firebase/firebase.component";
@@ -10,16 +11,37 @@ import emailjs from "emailjs-com";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase/firebase.component";
 
+// eslint-disable-next-line react/prop-types
 export default function Paypal({ formData }) {
-  
-  const {address, deliveytime} = formData
+  // eslint-disable-next-line react/prop-types
+  const { address, deliverytime } = formData;
+
+  console.log(address, deliverytime);
+
+  const addressRef = useRef(address)
+  const deliverytimeRef = useRef(deliverytime)
+
   emailjs.init("mESjxZ_og4PkWRGaA");
 
   const paypal = useRef();
 
   const total = useSelector(selectCartTotal);
 
+  const deliveryfee = useSelector(selectDeliveryFee)
+
+  const totalRef = useRef(total)
+  const deliveryfeeRef = useRef(deliveryfee)
+
+  console.log(deliveryfee);
+
   const cartItem = useSelector(selectCartItems);
+
+  useEffect(() => {
+    addressRef.current = address;
+    deliverytimeRef.current = deliverytime;
+    totalRef.current = total;
+    deliveryfeeRef.current = deliveryfee
+  }, [address, deliverytime, total, deliveryfee]);
 
   useEffect(() => {
     window.paypal
@@ -32,7 +54,7 @@ export default function Paypal({ formData }) {
                 description: "Total Amount",
                 amount: {
                   currency_code: "EUR",
-                  value: Math.floor(total),
+                  value: Math.floor(totalRef.current),
                 },
               },
             ],
@@ -46,14 +68,17 @@ export default function Paypal({ formData }) {
             email: order.payer.email_address,
             name: `${order.payer.name.given_name} ${order.payer.name.surname}`,
             items: cartItem,
-            amount: `${total} Euros`,
+            amount: `${totalRef.current} Euros`,
             status: order.status,
             time: order.create_time,
             payerid: order.payer.payer_id,
+            address: addressRef.current,
+            deliverytime: deliverytimeRef.current,
+            deliveryfee: deliveryfeeRef.current
           };
 
           console.log(completedOrder);
-          console.log(total);
+          console.log(totalRef.current);
 
           const products = completedOrder.items;
 
@@ -110,8 +135,8 @@ export default function Paypal({ formData }) {
               customerEmail: completedOrder.email,
               paymentMethod: "PAYPAL",
               items: `${formattedProductDetails}`,
-              address: address,
-              deliverytime: deliveytime,
+              address: completedOrder.address,
+              deliverytime: completedOrder.deliverytime,
             };
 
             emailjs
@@ -135,7 +160,6 @@ export default function Paypal({ formData }) {
           sendPaymentNotificationToSeller();
 
           alert("Order completed");
-
 
           const unsubscribe = customOnAUthStateChange((user) => {
             if (user) {

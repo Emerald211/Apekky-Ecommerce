@@ -58,3 +58,5 @@ export const deleteFromCart = (cartItem, productToDelete) => {
 
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
+
+export const setDeliveryFee = (amount) => createAction(CART_ACTION_TYPES.SET_DELIVERY_FREE, amount)

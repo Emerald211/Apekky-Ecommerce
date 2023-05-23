@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
   selectCartItems,
@@ -14,11 +14,14 @@ import { selectCurrentUser } from "../../store/user/user.selector";
 import { useForm } from "react-hook-form";
 import SignIn from "../../components/sign-in/sign-in.component";
 import Button from "../../components/button/button.component";
+import { setDeliveryFee } from "../../store/cart/cart.action";
 
 const Checkout = () => {
   const cartItem = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const currentuser = useSelector(selectCurrentUser);
+
+  const dispatch = useDispatch()
 
   const [formData, setFormData] = useState({})
   const [selectedValue, setSelectedValue] = useState("");
@@ -35,6 +38,7 @@ const Checkout = () => {
 
     setFormData(data)
 
+    dispatch(setDeliveryFee(3))
     setSubmitted(true)
     
   };

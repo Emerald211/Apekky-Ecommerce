@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUSer } from "./store/user/user.action";
 import Shop from "./pages/shop/shop.component";
 import Checkout from "./pages/checkout/checkout.comppnent";
+import SignInPage from "./pages/auth/signin/signin";
 
 
 
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index element={<Home />} />
+          <Route path="signin" element={<SignInPage />} />
           <Route path="shop/*" element={<Shop />} />
           <Route path="checkout" element={<Checkout />} />
         </Route>

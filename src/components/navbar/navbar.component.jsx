@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import "./navbar.styles.css";
 import logo from "../../assets/logo.jpg";
 import MobileNav from "../mobile-nav/mobile-nav.component";
@@ -15,7 +15,9 @@ import { useNavigate } from "react-router-dom";
 import { setCurrentUSer } from "../../store/user/user.action";
 const Navbar = () => {
 
+  
   const currentuser = useSelector(selectCurrentUser);
+  useEffect(() => {}, [currentuser])
 
   const dropdown = useSelector(selectDropDown);
 
@@ -29,15 +31,21 @@ const Navbar = () => {
     setShowNav(!showNav);
   };
 
-  const googleSignInHandler = async () => {
-    await SignInWithGooglePopup();
+  const googleSignInHandler =  () => {
+    // await SignInWithGooglePopup();
+
+    navigate("/signin")
   };
 
-  const signOutHandler = () => {
-    customSignOut();
-    dispatch(setCurrentUSer({}))
-    
+  const signOutHandler = async () => {
+    try {
+      await customSignOut();
+      dispatch(setCurrentUSer(null));
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
+  
   return (
     <nav
       style={{ color: "#FF01FD" }}
@@ -114,7 +122,7 @@ const Navbar = () => {
                     onClick={signOutHandler}
                     className="block text-lg font-bold  rounded   md:border-0 md:p-0  cursor-pointer "
                   >
-                    Sign Out
+                    Sign Out <span className=" text-gray-500 text-base">(You are Logged In)</span>
                   </a>
                 </li>
               </div>
@@ -124,7 +132,7 @@ const Navbar = () => {
                   onClick={googleSignInHandler}
                   className="block py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0 "
                 >
-                  Sign In
+                  Sign In <span className=" text-gray-500 text-base">(Not Logged In)</span>
                 </a>
               </li>
             )}
