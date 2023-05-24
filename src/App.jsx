@@ -12,6 +12,7 @@ import { setCurrentUSer } from "./store/user/user.action";
 import Shop from "./pages/shop/shop.component";
 import Checkout from "./pages/checkout/checkout.comppnent";
 import SignInPage from "./pages/auth/signin/signin";
+import OrderPage from "./pages/orders/order.component";
 
 
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="signin" element={<SignInPage />} />
           <Route path="shop/*" element={<Shop />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="orders" element={<OrderPage />} />
         </Route>
       </Routes>
     </>

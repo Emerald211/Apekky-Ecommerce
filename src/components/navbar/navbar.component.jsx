@@ -110,7 +110,7 @@ const Navbar = () => {
             </li>
 
             <li>
-              <a className="flex items-center py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0 cursor-pointer">
+              <a onClick={() => navigate("/orders")} className="flex items-center py-2 pl-3 pr-4 text-lg font-bold  rounded   md:border-0 md:p-0 cursor-pointer">
                 Orders <CartIcon />
               </a>
             </li>

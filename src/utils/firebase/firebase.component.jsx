@@ -171,16 +171,27 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredential.user;
   } catch (error) {
     // Handle error here
     if (error.code === "auth/email-already-in-use") {
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         return userCredential.user;
       } catch (signInError) {
-        console.error("Error signing in with existing email and password:", signInError);
+        console.error(
+          "Error signing in with existing email and password:",
+          signInError
+        );
         return null;
       }
     } else {
@@ -190,4 +201,24 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   }
 
   // return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const getOrdersFromUserDocument = async (userAuth) => {
+  try {
+    const userDocRef = doc(db, "users", userAuth.uid);
+    const userSnapshot = await getDoc(userDocRef);
+
+    const userDoc = userSnapshot.data();
+
+    const userOrdersArray = userDoc.orders;
+
+    const ordersItemArray = userOrdersArray.map((eachitem) => eachitem.items);
+
+    const combinedArray = ordersItemArray.flatMap(arr => arr)
+    
+
+    return combinedArray;
+  } catch (error) {
+    console.log("Error");
+  }
 };

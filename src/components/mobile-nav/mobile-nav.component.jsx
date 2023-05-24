@@ -33,13 +33,25 @@ const MobileNav = ({ set }) => {
         id="myLinks"
         className=" flex flex-col gap-8 text-2xl font-bold justify-center"
       >
-        <a onClick={() => navigate("/")}>Home</a>
-        <a onClick={() => navigate("/shop")}>Shop</a>
+        <a onClick={() => {
+          navigate("/")
+          set()
+        }}>Home</a>
+        <a onClick={() => {
+          navigate("/shop")
+          set();
+        }}>Shop</a>
 
         {currentuser ? (
           <div className=" flex flex-col gap-7">
-            <a>Orders</a>
-            <a onClick={signOutHandler}>Sign Out</a>
+            <a onClick={() => {
+          navigate("/orders")
+          set();
+        }}>Orders</a>
+            <a onClick={() => {
+              signOutHandler()
+              set()
+            }}>Sign Out</a>
           </div>
         ) : (
           <GoogleButton onClick={googleSignInHandler} />
