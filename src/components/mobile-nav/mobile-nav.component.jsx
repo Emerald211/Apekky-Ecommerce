@@ -1,25 +1,32 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import "./mobile-nav.styles.css";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import {
-  SignInWithGooglePopup,
+
   customSignOut,
 } from "../../utils/firebase/firebase.component";
+import { setCurrentUSer } from "../../store/user/user.action";
 
-import GoogleButton from "react-google-button";
 import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 const MobileNav = ({ set }) => {
   const currentuser = useSelector(selectCurrentUser);
 
+  useEffect(() => {}, [currentuser])
+
   const navigate = useNavigate()
 
-  const googleSignInHandler = async () => {
-    await SignInWithGooglePopup();
-  };
+  const dispatch = useDispatch()
 
-  const signOutHandler = () => {
-    customSignOut();
+
+  const signOutHandler = async () => {
+    try {
+      await customSignOut();
+      dispatch(setCurrentUSer(null));
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
   return (
     <div
@@ -54,7 +61,10 @@ const MobileNav = ({ set }) => {
             }}>Sign Out</a>
           </div>
         ) : (
-          <GoogleButton onClick={googleSignInHandler} />
+          <a onClick={() => {
+          navigate("/signin")
+          set();
+        }}>Sign In</a>
         )}
       </div>
       ;
