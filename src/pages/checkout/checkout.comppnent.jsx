@@ -21,11 +21,16 @@ const Checkout = () => {
   const cartTotal = useSelector(selectCartTotal);
   const currentuser = useSelector(selectCurrentUser);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
   const [selectedValue, setSelectedValue] = useState("");
-  const [submited, setSubmitted] = useState(false)
+  const [country, setCountry] = useState("");
+  const [submited, setSubmitted] = useState(false);
+
+  const handleCountryChange = (event) => {
+    setCountry(event.target.value);
+  };
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -33,14 +38,12 @@ const Checkout = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmitAction = async (data) => {
-    
     console.log("___FORM_DATA___,", data);
 
-    setFormData(data)
+    setFormData(data);
 
-    dispatch(setDeliveryFee(3))
-    setSubmitted(true)
-    
+    dispatch(setDeliveryFee(3));
+    setSubmitted(true);
   };
 
   // const [checkout, setCheckout] = useState(false);
@@ -82,28 +85,51 @@ const Checkout = () => {
           </span>
 
           <div className=" mt-24 flex justify-center text-black items-center flex-col font-serrat">
-            <form onSubmit={handleSubmit(onSubmitAction)} className=" flex gap-4 flex-col mb-24" action="">
+            <form
+              onSubmit={handleSubmit(onSubmitAction)}
+              className=" flex gap-4 flex-col mb-24"
+              action=""
+            >
               <input
                 className=" lg:w-[700px] outline-none px-3 py-2  border border-main"
                 type="text"
-                {...register('address')}
+                {...register("address")}
                 placeholder="Enter Address to deliver to"
               />
+              <select
+                onClick={handleCountryChange}
+                className="border border-main px-3 py-2"
+                name=""
+                {...register("country")}
+                id=""
+              >
+                <option>Select COUNTRY</option>
+                <option value="UK">UK</option>
+                <option value="OTHER COUNTRIES">OTHER COUNTRIES</option>
+              </select>
               <select
                 onClick={handleChange}
                 className="border border-main px-3 py-2"
                 name=""
-                {...register('deliverytime')}
+                {...register("deliverytime")}
                 id=""
               >
                 <option>Select Delivery Time</option>
-                <option value="Next Working Day">Next Working Day</option>
+                {country === "UK" && (
+                  <option value="Next Working Day">Next Working Day</option>
+                )}
 
                 <option value="Between 14 Days">Between 14 Days</option>
               </select>
-              {selectedValue === "Next Working Day" && <p className=" text-sm flex items-center text-red-500">*This costs <BsCurrencyPound/> 3 *</p>}
+              {selectedValue === "Next Working Day" && (
+                <p className=" text-sm flex items-center text-red-500">
+                  *This costs <BsCurrencyPound /> 3 *
+                </p>
+              )}
 
-              <Button buttonType="inverted">{ submited ? 'PROCEED TO PAYMENT' : 'SUBMIT' }</Button>
+              <Button buttonType="inverted">
+                {submited ? "PROCEED TO PAYMENT" : "SUBMIT"}
+              </Button>
             </form>
             <h1 className=" mb-4">Payment Method</h1>
 
@@ -145,7 +171,7 @@ const Checkout = () => {
               }}
             />
 
-            <Paypal formData = {formData} />
+            <Paypal formData={formData} />
           </div>
         </div>
       ) : (

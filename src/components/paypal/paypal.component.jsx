@@ -14,12 +14,13 @@ import { db } from "../../utils/firebase/firebase.component";
 // eslint-disable-next-line react/prop-types
 export default function Paypal({ formData }) {
   // eslint-disable-next-line react/prop-types
-  const { address, deliverytime } = formData;
+  const { address, deliverytime, country } = formData;
 
   console.log(address, deliverytime);
 
   const addressRef = useRef(address)
   const deliverytimeRef = useRef(deliverytime)
+  const countryRef = useRef(country)
 
   emailjs.init("mESjxZ_og4PkWRGaA");
 
@@ -41,7 +42,8 @@ export default function Paypal({ formData }) {
     deliverytimeRef.current = deliverytime;
     totalRef.current = total;
     deliveryfeeRef.current = deliveryfee
-  }, [address, deliverytime, total, deliveryfee]);
+    countryRef.current = country
+  }, [address, deliverytime, total, deliveryfee, country]);
 
   useEffect(() => {
     window.paypal
@@ -73,6 +75,7 @@ export default function Paypal({ formData }) {
             time: order.create_time,
             payerid: order.payer.payer_id,
             address: addressRef.current,
+            country: countryRef.current,
             deliverytime: deliverytimeRef.current,
             deliveryfee: deliveryfeeRef.current
           };
@@ -136,6 +139,7 @@ export default function Paypal({ formData }) {
               paymentMethod: "PAYPAL",
               items: `${formattedProductDetails}`,
               address: completedOrder.address,
+              country: completedOrder.country,
               deliverytime: completedOrder.deliverytime,
             };
 
