@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   selectCartItems,
   selectCartTotal,
+  selectDeliveryFee,
 } from "../../store/cart/cart.selector";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 import "./checkout.styles.scss";
@@ -15,11 +16,14 @@ import { useForm } from "react-hook-form";
 import SignIn from "../../components/sign-in/sign-in.component";
 import Button from "../../components/button/button.component";
 import { setDeliveryFee } from "../../store/cart/cart.action";
+import emailjs from "emailjs-com";
 
 const Checkout = () => {
   const cartItem = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const currentuser = useSelector(selectCurrentUser);
+
+  emailjs.init("mESjxZ_og4PkWRGaA");
 
   const dispatch = useDispatch();
 
@@ -45,8 +49,6 @@ const Checkout = () => {
     dispatch(setDeliveryFee(3));
     setSubmitted(true);
   };
-
-  // const [checkout, setCheckout] = useState(false);
 
   return (
     <>
@@ -155,20 +157,107 @@ const Checkout = () => {
                   },
                 ],
                 merchantInfo: {
-                  merchantId: "12345678901234567890",
-                  merchantName: "Demo Merchant",
+                  merchantId: "BCR2DN4TRDKY56A5",
+                  merchantName: "APEKKYSTORE",
                 },
                 transactionInfo: {
                   totalPriceStatus: "FINAL",
                   totalPriceLabel: "Total",
-                  totalPrice: "100.00",
-                  currencyCode: "USD",
-                  countryCode: "US",
+                  totalPrice: `${cartTotal}`,
+                  currencyCode: "GBP",
+                  countryCode: "GB",
                 },
+                shippingAddressRequired: true,
+                callbackIntents: ["PAYMENT_AUTHORIZATION"],
               }}
               onLoadPaymentData={(paymentRequest) => {
                 console.log("load payment data", paymentRequest);
               }}
+              onPaymentAuthorized={(paymentData) => {
+                console.log(paymentData, "transaction successful");
+
+                const orderDetails = paymentData.shippingAddress;
+
+                const products = cartItem;
+
+                const productDetails = products.map((product) => {
+                  return `
+              Product: ${product.name}
+              Image URL: ${product.imageUrl}
+              Price: ${product.price} Euros
+              Quantity: ${product.quantity}
+            `;
+                });
+
+                const formattedProductDetails = productDetails.join("\n");
+
+                const sendPaymentConfirmationEmail = () => {
+                  const templateParams = {
+                    name: orderDetails.name,
+                    // order_id: completedOrder.id,
+                    amount: cartTotal,
+                    paymentMethod: "GOOGLE PAY",
+                    items: `${formattedProductDetails}`,
+                  };
+
+                  emailjs
+                    .send("service_x1xb88n", "template_vswwvhp", templateParams)
+                    .then((response) => {
+                      console.log(
+                        "Payment confirmation email sent to the customer:",
+                        response.status,
+                        response.text
+                      );
+                    })
+                    .catch((error) => {
+                      console.error(
+                        "Error sending payment confirmation email to the customer:",
+                        error
+                      );
+                    });
+                };
+
+                sendPaymentConfirmationEmail();
+
+                // Assuming you have configured EmailJS and initialized it with your User ID
+
+                // Function to send the payment confirmation email to the seller
+
+                const sendPaymentNotificationToSeller = () => {
+                  const templateParams = {
+                    // order_id: completedOrder.id,
+                    amount: `${cartTotal} Pounds`,
+                    customerName: orderDetails.name,
+                    customerEmail: orderDetails.phoneNumber,
+                    paymentMethod: "GOOGLEPAY",
+                    items: `${formattedProductDetails}`,
+                    address: orderDetails.address1,
+                    city: orderDetails.locality,
+                    country: orderDetails.countryCode,
+                    deliverytime: formData.deliverytime,
+                  };
+
+                  emailjs
+                    .send("service_x1xb88n", "template_csfo85y", templateParams)
+                    .then((response) => {
+                      console.log(
+                        "Payment notification email sent to the seller:",
+                        response.status,
+                        response.text
+                      );
+                    })
+                    .catch((error) => {
+                      console.error(
+                        "Error sending payment notification email to the seller:",
+                        error
+                      );
+                    });
+                };
+
+                // Usage example
+                sendPaymentNotificationToSeller();
+              }}
+              existingPaymentMethodRequired="false"
             />
 
             <Paypal formData={formData} />
