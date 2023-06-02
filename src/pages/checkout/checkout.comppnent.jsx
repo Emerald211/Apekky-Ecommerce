@@ -136,7 +136,7 @@ const Checkout = () => {
             <h1 className=" mb-4">Payment Method</h1>
 
             <GooglePayButton
-              environment="TEST"
+              environment="PRODUCTION"
               paymentRequest={{
                 apiVersion: 2,
                 apiVersionMinor: 0,
@@ -150,8 +150,10 @@ const Checkout = () => {
                     tokenizationSpecification: {
                       type: "PAYMENT_GATEWAY",
                       parameters: {
-                        gateway: "example",
-                        gatewayMerchantId: "exampleGatewayMerchantId",
+                        gateway: "stripe",
+                        "stripe:version": "2018-10-31",
+                        "stripe:publishableKey":
+                          "pk_test_51NEGz0D4SNHQTH6u7RmWjnSVfxMdNy7bD76yt7mf4QKIw53evABPUfmujsQbkjerAR7f1oyOxPS5F5UxYjrZJJIb00DyZLi0ly",
                       },
                     },
                   },
