@@ -17,6 +17,7 @@ import SignIn from "../../components/sign-in/sign-in.component";
 import Button from "../../components/button/button.component";
 import { setDeliveryFee } from "../../store/cart/cart.action";
 import emailjs from "emailjs-com";
+import PaymentForn from "../../components/payment-form/payment-form.component";
 
 const Checkout = () => {
   const cartItem = useSelector(selectCartItems);
@@ -32,6 +33,9 @@ const Checkout = () => {
   const [country, setCountry] = useState("");
   const [submited, setSubmitted] = useState(false);
 
+  // eslint-disable-next-line no-undef
+  console.log(import.meta.env.VITE_DEV_TOKEN_MECHANT_ID);
+
   const handleCountryChange = (event) => {
     setCountry(event.target.value);
   };
@@ -39,7 +43,7 @@ const Checkout = () => {
     setSelectedValue(event.target.value);
   };
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, res } = useForm();
 
   const onSubmitAction = async (data) => {
     console.log("___FORM_DATA___,", data);
@@ -134,9 +138,9 @@ const Checkout = () => {
               </Button>
             </form>
             <h1 className=" mb-4">Payment Method</h1>
-
+            {/* 
             <GooglePayButton
-              environment="PRODUCTION"
+              environment="TEST"
               paymentRequest={{
                 apiVersion: 2,
                 apiVersionMinor: 0,
@@ -150,16 +154,17 @@ const Checkout = () => {
                     tokenizationSpecification: {
                       type: "PAYMENT_GATEWAY",
                       parameters: {
-                        gateway: "stripe",
-                        "stripe:version": "2018-10-31",
-                        "stripe:publishableKey":
-                          "pk_test_51NEGz0D4SNHQTH6u7RmWjnSVfxMdNy7bD76yt7mf4QKIw53evABPUfmujsQbkjerAR7f1oyOxPS5F5UxYjrZJJIb00DyZLi0ly",
+                        gateway: "braintree",
+                        "braintree:apiVersion": "v1",
+                        "braintree:sdkVersion": "braintree.client.3.94.0",
+                        "braintree:merchantId": import.meta.env.VITE_DEV_TOKEN_BRAINTREE_MECHANT_ID,
+                        "braintree:clientKey": import.meta.env.VITE_DEV_TOKEN_BRAINTREE_CLIENT_KEY
                       },
                     },
                   },
                 ],
                 merchantInfo: {
-                  merchantId: "BCR2DN4TRDKY56A5",
+                  merchantId: import.meta.env.VITE_DEV_TOKEN_MECHANT_ID,
                   merchantName: "APEKKYSTORE",
                 },
                 transactionInfo: {
@@ -258,11 +263,15 @@ const Checkout = () => {
 
                 // Usage example
                 sendPaymentNotificationToSeller();
+
+               
               }}
               existingPaymentMethodRequired="false"
             />
 
-            <Paypal formData={formData} />
+            <Paypal formData={formData} /> */}
+
+            <PaymentForn />
           </div>
         </div>
       ) : (

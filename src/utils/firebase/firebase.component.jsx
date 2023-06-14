@@ -20,12 +20,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD-YYfey22bBbKW2XH0-3xBK_s_S8H51cU",
+  apiKey: import.meta.env.VITE_DEV_FIREBASE_APIKEY,
   authDomain: "apeekystore.firebaseapp.com",
   projectId: "apeekystore",
   storageBucket: "apeekystore.appspot.com",
-  messagingSenderId: "931576996551",
-  appId: "1:931576996551:web:46d241ebae546d879f14e2",
+  messagingSenderId: import.meta.env.VITE_DEV_FIREBASE_SENDER_ID,
+  appId: import.meta.env.VITE_DEV_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -214,8 +214,7 @@ export const getOrdersFromUserDocument = async (userAuth) => {
 
     const ordersItemArray = userOrdersArray.map((eachitem) => eachitem.items);
 
-    const combinedArray = ordersItemArray.flatMap(arr => arr)
-    
+    const combinedArray = ordersItemArray.flatMap((arr) => arr);
 
     return combinedArray;
   } catch (error) {
