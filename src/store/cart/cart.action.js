@@ -2,6 +2,7 @@ import { CART_ACTION_TYPES } from "./cart.types";
 import { createAction } from "../../utils/reducer/reducer";
 
 const addCartItemFunction = (cartItem, productsToAdd) => {
+  // change cartitem to camel case and the others too aswell
   const existingCartItem = cartItem.find((cartitem) => {
     return cartitem.id === productsToAdd.id;
   });
@@ -59,4 +60,5 @@ export const deleteFromCart = (cartItem, productToDelete) => {
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
-export const setDeliveryFee = (amount) => createAction(CART_ACTION_TYPES.SET_DELIVERY_FREE, amount)
+export const setDeliveryFee = (amount) =>
+  createAction(CART_ACTION_TYPES.SET_DELIVERY_FREE, amount);

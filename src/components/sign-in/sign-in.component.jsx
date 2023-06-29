@@ -11,17 +11,16 @@ const SignIn = () => {
 
   const onSubmitAction = async (data) => {
     const { email, password } = data;
-    console.log("___FORM_DATA___,", data);
     navigate("/checkout");
 
     await createAuthUserWithEmailAndPassword(email, password);
-    };
-    
-    const googleSignInHandler = async () => {
-        await SignInWithGooglePopup();
+  };
 
-        navigate("/shop")
-      };
+  const googleSignInHandler = async () => {
+    await SignInWithGooglePopup();
+
+    navigate("/shop");
+  };
 
   return (
     <div className=" flex flex-col justify-center items-center">
